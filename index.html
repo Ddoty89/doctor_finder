@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Find the right doctor for the job near you.</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+  <script type="text/css" rel='stylesheet' src='main.css'></script>
+</head>
+<body>
+	
+	<banner class='header'>
+		<h1 class='title'>Search for the doctor you need where ever you are</h1>
+	</banner>
+	
+	<main class='main-body' role='main'>
+		
+		<form class='user-input'>
+			<label for='location'>Please provide your zipcode or current location</label>
+			<input type="text" name="location" id='location' placeholder="please use zipcode">
+			<button class='current-location'>Current Location</button>
+			
+			<div class='dropdown'>
+      	<label class="dropdown" for="jobs">How do you feel about it?</label>
+      	<select name="jobs" id='jobs' required>
+        	<option value="0" selected>Allergist</option>
+    	    <option value="1">Dentist</option>
+      	  <option value="2">Emergency Medicine</option>
+        	<option value="3">OBGYN</option>
+  	      <option value="4">Specialist/</option>
+    	    <option value="5"></option>
+      	  <option value="6"></option>
+			</div>
+		</form>
+	
+	<div class='display-of-doctors'>
+
+	</div>
+
+	<iframe
+	  width="600"
+  	height="450"
+	  frameborder="0" style="border:0"
+  	src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDPvg_Vp1gS2-cgxinS3_Hto8Crq3u7d4w&q=Space+Needle,Seattle+WA" allowfullscreen>
+	</iframe>
+
+	</main>
+
+</body>
+<script type="text/javascript" src='app.js'></script>
+</html>
