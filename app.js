@@ -19,3 +19,14 @@ function callToGoogleMaps(zipcode, callback) {
 	};
 	$.getJSON(GOOGLE_MAPS_ENDPOINT, query, callback);
 }
+
+
+function renderDivToHTML(docImg, doc) {
+	return `
+		<div class='display-of-doctors'>
+			<div class='doctor-profile'>
+
+			</div>
+		</div>
+	`;
+}
