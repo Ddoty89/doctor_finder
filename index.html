@@ -3,7 +3,7 @@
 <head>
 	<title>Find the right doctor for the job near you.</title>
 	<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-  <script type="text/css" rel='stylesheet' src='main.css'></script>
+  <link type="text/css" rel='stylesheet' href='main.css'>
 </head>
 <body>
 	
@@ -19,7 +19,7 @@
 			<button class='current-location'>Current Location</button>
 			
 			<div class='dropdown'>
-				<label class="dropdown" for="jobs">How do you feel about it?</label>
+				<label class="dropdown" for="jobs">What specialty are you looking for?</label>
   			<select name="jobs" id='jobs' required>
       		<option value="0" selected>Allergist</option>
     	    <option value="1">Dentist</option>
@@ -28,6 +28,7 @@
       		<option value="4">OBGYN</option>
     	    <option value="5">Physical Therapist</option>
 		  	  <option value="6">Specialist/Technologist Athlitic Traininer</option>
+		  	</select>
 			</div>
 		</form>
 	
@@ -35,17 +36,13 @@
 
 	</div>
 
-	<h2>Doctors with the selected specialty of<span class='selected-job'>Allergist</h2>
+	<h2>Doctors with the selected specialty of <span class='selected-job'>Allergist</span></h2>
 	<div class='map'>
-		<iframe
-	  width="600"
-  		height="450"
-	  	frameborder="0" style="border:0"
-  		src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDPvg_Vp1gS2-cgxinS3_Hto8Crq3u7d4w&q=Space+Needle,Seattle+WA" allowfullscreen>
-		</iframe>
+		
+
 	</div>
 	</main>
-
+<div class='box'></div>
 </body>
 <script type="text/javascript" src='app.js'></script>
 </html>
