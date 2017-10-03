@@ -15,7 +15,7 @@ const GOOGLE_MAPS_ENDPOINT = 'https://www.google.com/maps/embed/v1/place?'
 
 function callToGoogleMaps(zipcode, callback) {
 	const query = {
-		key: ‘AIzaSyDPvg_Vp1gS2-cgxinS3_Hto8Crq3u7d4w’
+		key: ‘AIzaSyD-qzjAThO4iRO0-WdTHV-VTFQ3e_tsQOg’
 	};
 	$.getJSON(GOOGLE_MAPS_ENDPOINT, query, callback);
 }
