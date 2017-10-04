@@ -5,7 +5,9 @@
 #map {
 	height: 400px;
 	width: 600px;
-	background-color: grey;
+	/*background-color: grey;*/
 }
 
-
+.hidden {
+	display: none;
+}

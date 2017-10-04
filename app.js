@@ -1,13 +1,26 @@
-// const BETTER_DOCTOR_ENDPOINT = 'https://api.betterdoctor.com/2016-03-01/doctors?';
+const state ={
+user_pos: {},
+practices: []
+}
 
+// const BETTER_DOCTOR_ENDPOINT = 'https://api.betterdoctor.com/2016-03-01/doctors?';
 // function callToBetterDoctorAPI(location, callback) {
 //   const query = {
-//     location: `${location}`,
+//     location: state.user_pos
 //     user_key: ‘bd89718570bb0b867674b0c0788273da’
 //   };
 //   $.getJSON(BETTER_DOCTOR_ENDPOINT, query, callback);
 //   console.log(callback);
 // }
+
+
+function findCurrentLocationButton() {
+	$('.js-current-location').on('click', function(event) {
+		$('.map').removeClass('hidden');
+		$('.specialty-header').removeClass('hidden');
+		$(initMap);
+	})
+}
 
 
 
@@ -47,6 +60,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 
+// $(initMap);
 
 // function renderDivToHTML(docImg, doc) {
 // 	return `
@@ -69,8 +83,8 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
 
 
-// $(findCurrentLocation);
+$(findCurrentLocationButton);
 
 
-$(initMap);
+
 

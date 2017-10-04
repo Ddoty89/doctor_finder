@@ -27,15 +27,16 @@
 		  	  <option value="7">Specialist/Technologist Athlitic Traininer</option>
 		  	</select>
 			</div>
-
-			<p>Please allow us to use your current location</p>
-			<button class='js-current-location'>Current Location</button>
 		</form>
+		
+		<p>Please allow us to use your current location</p>
+		<button class='js-current-location'>Current Location</button>
 
-	<h2>Doctors with the selected specialty of <span class='selected-job'>Allergist</span></h2>
-	<div id='map'>
+
+	<h2 class='specialty-header hidden'>Doctors with the selected specialty of <span class='selected-job'>Allergist</span></h2>
+	<div id='map' class='map hidden'>
 		<script async defer 
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-qzjAThO4iRO0-WdTHV-VTFQ3e_tsQOg&callback=initMap">
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-qzjAThO4iRO0-WdTHV-VTFQ3e_tsQOg">
 		</script>
 	</div>
 
