@@ -1,6 +1,6 @@
-const state ={
-user_pos: {},
-practices: []
+const state = {
+	user_pos: {},
+	practices: []
 }
 
 // const BETTER_DOCTOR_ENDPOINT = 'https://api.betterdoctor.com/2016-03-01/doctors?';
@@ -18,22 +18,13 @@ function findCurrentLocationButton() {
 	$('.js-current-location').on('click', function(event) {
 		$('.map').removeClass('hidden');
 		$('.specialty-header').removeClass('hidden');
-		$(initMap);
+		initMap();
+		
 	})
 }
 
-
-
-var map, infoWindow;
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 39.8283, lng: -98.5795},
-    zoom: 6
-  });
-  infoWindow = new google.maps.InfoWindow;
-
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
+function findUserPosition() {
+navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
@@ -46,6 +37,18 @@ function initMap() {
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
+}
+
+var map, infoWindow;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 41.8781, lng: -87.6298},
+    zoom: 11
+  });
+  infoWindow = new google.maps.InfoWindow;
+
+  if (navigator.geolocation) {
+    findUserPosition();
   } else {
     handleLocationError(false, infoWindow, map.getCenter());
   }
@@ -73,13 +76,16 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 // }
 
 
-// function callDataFromBetterDoctors(dataResult) {
-
-// }
-
-
+function callDataFromBetterDoctors(dataResult) {
+//to be pushed into state.practices
+}
 
 
+
+// var marker = new google.maps.Marker({
+//           position: uluru,
+//           map: map
+//         });
 
 
 
