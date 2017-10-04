@@ -11,14 +11,41 @@
 
 
 
-// const GOOGLE_MAPS_ENDPOINT = 'https://www.google.com/maps/embed/v1/place?'
+var map, infoWindow;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 39.8283, lng: -98.5795},
+    zoom: 6
+  });
+  infoWindow = new google.maps.InfoWindow;
 
-// function callToGoogleMaps(zipcode, callback) {
-// 	const query = {
-// 		key: ‘AIzaSyD-qzjAThO4iRO0-WdTHV-VTFQ3e_tsQOg’
-// 	};
-// 	$.getJSON(GOOGLE_MAPS_ENDPOINT, query, callback);
-// }
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('Current Location');
+      infoWindow.open(map);
+      map.setCenter(pos);
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+  infoWindow.open(map);
+}
+
 
 
 // function renderDivToHTML(docImg, doc) {
@@ -32,18 +59,18 @@
 // }
 
 
+// function callDataFromBetterDoctors(dataResult) {
 
-function initMap() {
-  var uluru = {lat: 42, lng: -89};
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 4,
-    center: uluru
-  });
-  var marker = new google.maps.Marker({
-    position: uluru,
-    map: map
-  });
-}
+// }
+
+
+
+
+
+
+
+// $(findCurrentLocation);
+
 
 $(initMap);
 
