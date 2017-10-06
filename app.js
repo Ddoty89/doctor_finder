@@ -2,14 +2,14 @@ const state = {
   userLat: {},
 	userLng: {},
   selectedJob: {},
-	practices: []
+	practicesOfSelectedJob: []
 };
 
 function callToBetterDoctorAPI(lat, lng) {
   let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},20&sort=distance-asc&skip=0&limit=50&user_key=bd89718570bb0b867674b0c0788273da`;
   $.get(BETTER_DOCTOR_ENDPOINT, function (data) {
-  
-    console.log(data)
+  	pushDoctorsWhichJobsMatchSelected(data);
+  	console.log(data);
   });
 }
 
@@ -24,6 +24,41 @@ function handleDoctorJobSelection() {
     }
   })
 }
+
+function pushDoctorsWhichJobsMatchSelected(apiResults) {
+	const doctorJob = apiResults.data.map(function(doctorOffices) {
+		return doctorOffices.doctors.map(function(individualDoctors) {
+			return individualDoctors.specialties.map(function(doctorSpecialities) {
+				return doctorSpecialities.actor
+			})
+		})
+	})
+	console.log(doctorJob);
+	// state.selectedJob
+}
+
+// function callDataFromBetterDoctors(dataResult) {
+//to be pushed into state.practicesOfSelectedJob
+// }
+
+
+// Possible need for recursion
+
+// var inception = function(arr) {
+//   let levels = 1;
+//   if(typeof arr[0] !== 'object') {
+//     return levels;
+//   } else {
+//     return levels += inception(arr[0])
+//   }
+// }
+// inception([[['leo']]])
+
+
+
+
+
+
 
 function findCurrentLocationButton() {
 	$('.js-current-location').on('click', function(event) {
@@ -78,6 +113,15 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.open(map);
 }
 
+function createMarkers() {
+	var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+}
+
+
+
 
 
 
@@ -92,16 +136,9 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 // }
 
 
-function callDataFromBetterDoctors(dataResult) {
-//to be pushed into state.practices
-}
 
 
 
-// var marker = new google.maps.Marker({
-//           position: uluru,
-//           map: map
-//         });
 
 
 $(handleDoctorJobSelection);
