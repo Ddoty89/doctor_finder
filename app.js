@@ -1,26 +1,36 @@
 const state = {
-	user_pos: {},
+  userLat: {},
+	userLng: {},
+  selectedJob: {},
 	practices: []
+};
+
+function callToBetterDoctorAPI(lat, lng) {
+  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},20&sort=distance-asc&skip=0&limit=50&user_key=bd89718570bb0b867674b0c0788273da`;
+  $.get(BETTER_DOCTOR_ENDPOINT, function (data) {
+  
+    console.log(data)
+  });
 }
 
-// const BETTER_DOCTOR_ENDPOINT = 'https://api.betterdoctor.com/2016-03-01/doctors?';
-// function callToBetterDoctorAPI(location, callback) {
-//   const query = {
-//     location: state.user_pos
-//     user_key: ‘bd89718570bb0b867674b0c0788273da’
-//   };
-//   $.getJSON(BETTER_DOCTOR_ENDPOINT, query, callback);
-//   console.log(callback);
-// }
-
+function handleDoctorJobSelection() {
+  $('#jobs').change(function() {
+    let selectedJob = $('#jobs option:selected').text();
+    console.log(selectedJob);
+    if(selectedJob === '') {
+      state.selectedJob = 'selectedJob'; 
+    } else {
+      state.selectedJob = 'selectedJob';
+    }
+  })
+}
 
 function findCurrentLocationButton() {
 	$('.js-current-location').on('click', function(event) {
 		$('.map').removeClass('hidden');
 		$('.specialty-header').removeClass('hidden');
 		initMap();
-		
-	})
+	});
 }
 
 function findUserPosition() {
@@ -29,15 +39,21 @@ navigator.geolocation.getCurrentPosition(function(position) {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
+      state.userLat = pos.lat;
+      state.userLng = pos.lng;
 
       infoWindow.setPosition(pos);
       infoWindow.setContent('Current Location');
       infoWindow.open(map);
       map.setCenter(pos);
+      
+      callToBetterDoctorAPI(state.userLat, state.userLng);
+      
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
 }
+
 
 var map, infoWindow;
 function initMap() {
@@ -63,7 +79,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 
-// $(initMap);
+
 
 // function renderDivToHTML(docImg, doc) {
 // 	return `
@@ -88,7 +104,7 @@ function callDataFromBetterDoctors(dataResult) {
 //         });
 
 
-
+$(handleDoctorJobSelection);
 $(findCurrentLocationButton);
 
 
