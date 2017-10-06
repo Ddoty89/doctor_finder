@@ -6,10 +6,9 @@ const state = {
 };
 
 function callToBetterDoctorAPI(lat, lng) {
-  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},20&sort=distance-asc&skip=0&limit=50&user_key=bd89718570bb0b867674b0c0788273da`;
+  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},20&sort=distance-asc&skip=0&limit=5&user_key=bd89718570bb0b867674b0c0788273da`;
   $.get(BETTER_DOCTOR_ENDPOINT, function (data) {
   	pushDoctorsWhichJobsMatchSelected(data);
-  	console.log(data);
   });
 }
 
@@ -18,23 +17,37 @@ function handleDoctorJobSelection() {
     let selectedJob = $('#jobs option:selected').text();
     console.log(selectedJob);
     if(selectedJob === '') {
-      state.selectedJob = 'selectedJob'; 
+      state.selectedJob == false; 
     } else {
-      state.selectedJob = 'selectedJob';
+      state.selectedJob = selectedJob;
     }
-  })
+  });
 }
 
 function pushDoctorsWhichJobsMatchSelected(apiResults) {
-	const doctorJob = apiResults.data.map(function(doctorOffices) {
-		return doctorOffices.doctors.map(function(individualDoctors) {
-			return individualDoctors.specialties.map(function(doctorSpecialities) {
-				return doctorSpecialities.actor
-			})
-		})
-	})
-	console.log(doctorJob);
-	// state.selectedJob
+  const doctorJobArrAsString =[];
+  const doctorOffices = apiResults.data.map(docOffices => {
+	  return docOffices;
+  });
+	const doctorJobs = apiResults.data.map(docOffices => {
+	  return docOffices.doctors.map(elem => {
+	    return elem.specialties[0].actor;
+	  });
+	});
+	const doctorJobAsString = doctorJobs.map(layer1Array => {
+	  return layer1Array.map(layer2Array => {
+	    return doctorJobArrAsString.push(layer2Array);
+	  })
+	}) 
+	console.log(doctorJobArrAsString);
+	for(let i = 0; i < doctorJobArrAsString.length; i++) {
+	 // console.log(doctorJobArrAsString[i], i)
+	  if(doctorJobArrAsString[i] === state.selectedJob) {
+	  console.log('match!')
+	  } else {
+	  console.log('NOT MATCH!');
+	  }
+	}
 }
 
 // function callDataFromBetterDoctors(dataResult) {
