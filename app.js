@@ -1,7 +1,8 @@
 const state = {
   userLat: {},
 	userLng: {},
-  selectedJob: {},
+  selectedJob: '',
+  jobsToCheck: {},
 	practicesOfSelectedJob: []
 };
 
@@ -25,53 +26,17 @@ function handleDoctorJobSelection() {
 }
 
 function pushDoctorsWhichJobsMatchSelected(apiResults) {
-  const doctorJobArrAsString =[];
-  const doctorOffices = apiResults.data.map(docOffices => {
-	  return docOffices;
-  });
-	const doctorJobs = apiResults.data.map(docOffices => {
-	  return docOffices.doctors.map(elem => {
-	    return elem.specialties[0].actor;
-	  });
-	});
-	const doctorJobAsString = doctorJobs.map(layer1Array => {
-	  return layer1Array.map(layer2Array => {
-	    return doctorJobArrAsString.push(layer2Array);
-	  })
-	}) 
-	console.log(doctorJobArrAsString);
-	for(let i = 0; i < doctorJobArrAsString.length; i++) {
-	 // console.log(doctorJobArrAsString[i], i)
-	  if(doctorJobArrAsString[i] === state.selectedJob) {
-	  console.log('match!')
-	  } else {
-	  console.log('NOT MATCH!');
-	  }
-	}
+  const jobsArr = [];
+	apiResults.data.forEach(result => {
+		result.doctors.forEach(doctor => {
+			doctor.specialties.forEach(skill => {
+				if(skill.actor === state.selectedJob) {
+					state.practicesOfSelectedJob.push(result);
+				}
+			})
+		})
+	})
 }
-
-// function callDataFromBetterDoctors(dataResult) {
-//to be pushed into state.practicesOfSelectedJob
-// }
-
-
-// Possible need for recursion
-
-// var inception = function(arr) {
-//   let levels = 1;
-//   if(typeof arr[0] !== 'object') {
-//     return levels;
-//   } else {
-//     return levels += inception(arr[0])
-//   }
-// }
-// inception([[['leo']]])
-
-
-
-
-
-
 
 function findCurrentLocationButton() {
 	$('.js-current-location').on('click', function(event) {
@@ -134,6 +99,24 @@ function createMarkers() {
 }
 
 
+
+
+// function callDataFromBetterDoctors(dataResult) {
+//to be pushed into state.practicesOfSelectedJob
+// }
+
+
+// Possible need for recursion
+
+// var inception = function(arr) {
+//   let levels = 1;
+//   if(typeof arr[0] !== 'object') {
+//     return levels;
+//   } else {
+//     return levels += inception(arr[0])
+//   }
+// }
+// inception([[['leo']]])
 
 
 
