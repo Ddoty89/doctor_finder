@@ -5,9 +5,12 @@
 #map {
 	height: 400px;
 	width: 600px;
-	/*background-color: grey;*/
+}
+
+.js-specialty-display {
+  background-color:blue;
 }
 
 .hidden {
-	display: none;
+  display: none;
 }

@@ -1,15 +1,14 @@
 const state = {
   userLat: {},
-	userLng: {},
+  userLng: {},
   selectedJob: '',
-  jobsToCheck: {},
-	practicesOfSelectedJob: []
+  practicesOfSelectedJob: [],
 };
 
 function callToBetterDoctorAPI(lat, lng) {
-  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},20&sort=distance-asc&skip=0&limit=5&user_key=bd89718570bb0b867674b0c0788273da`;
+  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},20&sort=distance-asc&skip=0&limit=10&user_key=bd89718570bb0b867674b0c0788273da`;
   $.get(BETTER_DOCTOR_ENDPOINT, function (data) {
-  	pushDoctorsWhichJobsMatchSelected(data);
+    pushDoctorsWhichJobsMatchSelected(data);
   });
 }
 
@@ -26,24 +25,24 @@ function handleDoctorJobSelection() {
 }
 
 function pushDoctorsWhichJobsMatchSelected(apiResults) {
-  const jobsArr = [];
-	apiResults.data.forEach(result => {
-		result.doctors.forEach(doctor => {
-			doctor.specialties.forEach(skill => {
-				if(skill.actor === state.selectedJob) {
-					state.practicesOfSelectedJob.push(result);
-				}
-			})
-		})
-	})
+  apiResults.data.forEach(result => {
+    result.doctors.forEach(doctor => {
+      doctor.specialties.forEach(skill => {
+        if(skill.actor === state.selectedJob) {
+          state.practicesOfSelectedJob.push(result);
+        }
+      });
+    });
+  });
+  createMarkers(state.practicesOfSelectedJob);
 }
 
 function findCurrentLocationButton() {
-	$('.js-current-location').on('click', function(event) {
-		$('.map').removeClass('hidden');
-		$('.specialty-header').removeClass('hidden');
-		initMap();
-	});
+  $('.js-current-location').on('click', function(event) {
+    $('.map').removeClass('hidden');
+    $('.specialty-header').removeClass('hidden');
+    initMap();
+  });
 }
 
 function findUserPosition() {
@@ -91,44 +90,72 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.open(map);
 }
 
-function createMarkers() {
-	var marker = new google.maps.Marker({
-          position: uluru,
+function createMarkers(practices) {
+  
+  let locationOfPractices = [];
+  practices.forEach(location => {
+    
+    console.log(location.phones)
+    console.log(location.phones[0].type)
+    console.log(location.phones[0].number)
+    
+    const locationName = location.name;
+    const locationStreetAddress = location.visit_address.street;
+    const locationCity = location.visit_address.city;
+    const locationState = location.visit_address.state;
+    let locationPhoneNumber = '';
+    for(let j = 0; j < location.length; j++) {
+      if(location.phones[i].type === 'landline') {
+        locationPhoneNumber = location.phones[i].number;
+      } else {
+        locationPhoneNumber = 'No number provided';
+      }
+    }
+    let ifPracticeAcceptingNewPatients = '';
+    if(location.accepts_new_patients === true) {
+      ifPracticeAcceptingNewPatients = 'Accepting new patients';
+    } else {
+      ifPracticeAcceptingNewPatients = 'Not accepting new patients';
+    }
+    locationOfPractices.push(`<strong>${locationName}</strong><br>
+                              ${locationStreetAddress}<br>
+                              ${locationCity}, ${locationState}<br>              
+                              ${ifPracticeAcceptingNewPatients}<br>
+                              ${locationPhoneNumber}`);
+    locationOfPractices.push(location.lat);
+    locationOfPractices.push(location.lon);
+  });  
+  
+let infowindow = new google.maps.InfoWindow({});
+
+let marker, i;
+
+  for (i = 0; i < locationOfPractices.length; i+=3) {
+    let marker = new google.maps.Marker({
+          position: new google.maps.LatLng(locationOfPractices[i+1],locationOfPractices[i+2]),
           map: map
         });
+
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+      return function () {
+        infowindow.setContent(locationOfPractices[i]);
+        infowindow.open(map, marker);
+      };
+    })(marker, i));
+  }
 }
 
 
-
-
-// function callDataFromBetterDoctors(dataResult) {
-//to be pushed into state.practicesOfSelectedJob
-// }
-
-
-// Possible need for recursion
-
-// var inception = function(arr) {
-//   let levels = 1;
-//   if(typeof arr[0] !== 'object') {
-//     return levels;
-//   } else {
-//     return levels += inception(arr[0])
-//   }
-// }
-// inception([[['leo']]])
-
-
-
+    
 
 // function renderDivToHTML(docImg, doc) {
-// 	return `
-// 		<div class='display-of-doctors'>
-// 			<div class='doctor-profile'>
+//  return `
+//    <div class='display-of-doctors'>
+//      <div class='doctor-profile'>
 
-// 			</div>
-// 		</div>
-// 	`;
+//      </div>
+//    </div>
+//  `;
 // }
 
 
