@@ -3,10 +3,11 @@ const state = {
   userLng: {},
   selectedJob: '',
   practicesOfSelectedJob: [],
+  locationPhoneNumber: []
 };
 
 function callToBetterDoctorAPI(lat, lng) {
-  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},20&sort=distance-asc&skip=0&limit=10&user_key=bd89718570bb0b867674b0c0788273da`;
+  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},20&sort=distance-asc&skip=0&limit=25&user_key=bd89718570bb0b867674b0c0788273da`;
   $.get(BETTER_DOCTOR_ENDPOINT, function (data) {
     pushDoctorsWhichJobsMatchSelected(data);
   });
@@ -95,22 +96,20 @@ function createMarkers(practices) {
   let locationOfPractices = [];
   practices.forEach(location => {
     
-    console.log(location.phones)
-    console.log(location.phones[0].type)
-    console.log(location.phones[0].number)
-    
     const locationName = location.name;
     const locationStreetAddress = location.visit_address.street;
     const locationCity = location.visit_address.city;
     const locationState = location.visit_address.state;
     let locationPhoneNumber = '';
-    for(let j = 0; j < location.length; j++) {
-      if(location.phones[i].type === 'landline') {
-        locationPhoneNumber = location.phones[i].number;
+    location.phones.forEach(officeNumbers => {
+      console.log(officeNumbers)
+      if(officeNumbers.type === 'landline') {
+        locationPhoneNumber = officeNumbers.number;
       } else {
-        locationPhoneNumber = 'No number provided';
+        locationPhoneNumber = 'No phone number provided';
       }
-    }
+    });
+    console.log(locationPhoneNumber)
     let ifPracticeAcceptingNewPatients = '';
     if(location.accepts_new_patients === true) {
       ifPracticeAcceptingNewPatients = 'Accepting new patients';
@@ -145,7 +144,6 @@ let marker, i;
   }
 }
 
-
     
 
 // function renderDivToHTML(docImg, doc) {
@@ -166,7 +164,3 @@ let marker, i;
 
 $(handleDoctorJobSelection);
 $(findCurrentLocationButton);
-
-
-
-
