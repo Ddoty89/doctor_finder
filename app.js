@@ -1,49 +1,125 @@
 const state = {
-  userLat: {},
-  userLng: {},
-  selectedJob: '',
-  practicesOfSelectedJob: [],
-  locationPhoneNumber: []
+  selectedJobText: '',
+  selectedJobVal: '',
+  arrayOfAssociatedProfessions: '',
+  locationOfPractices: [],
+  selectedJobCategories: [
+    
+    {ALG: ['Allergist',
+    'Otolaryngic Allergist',
+    'Pediatric Allergist']},
+    
+    {CHR: ['Chiropractor',
+    'Pediatric Chiropractor',
+    'Sports Chiropractor']},
+    
+    {DEN: ['Dentist',
+    'Orthodontist',
+    'Pediatric Dentist']},
+    
+    {DIE: ['Dietitian']},
+    
+    {ENT: ['Ear, Nose and Throat Doctor']},
+    
+    {FAM: ['Family Medicine Adolescent Medicine',
+    'Family Nurse Practitoner',
+    'General Nurse Practitoner',
+    'General Practitoner']},
+    
+    {PED: ['Adolescent Medicine Pediatrician',
+    'Pediatric Dentist',
+    'Pediatric Ear, Nose and Throat Doctor',
+    'Pediatrician',
+    'Pediatric Nurse Practitoner',
+    'Pediatric Physical Therapy']},
+    
+    {PT: ['Physical Therapist',
+    'Sports Physical Therapist']},
+    
+    {MH: [ 'Adult Psychologist',
+    'Art Therapist',
+    'Clinical Psychologist',
+    'Cognitive & Behavioral Psychologist',
+    'Counceling Psychologist',
+    'Counselor',
+    'Family Psychologist',
+    'Mental Health Counselor',
+    'Mental Health Nurse Practitoner',
+    'Professional Counselor',
+    'Psychiatrist',
+    'Psychoanalysts',
+    'Psychologist' ]},
+    
+    {MHA: ['Addiction Counselor',
+    'Addiction Psychiatrist',
+    'Addiction Psychologist',
+    'Addiction Specialist',
+    'Family Medicine Addiction Medicine',
+    'Psychiatry & Neurology Addiction Medicine']},
+    
+    {WH: ['Gynecologist',
+    'OBGYN',
+    'OBGYN Nurse Practitoner',
+    'Obstetrician',
+    'Women\'s Health Nurse Practitoner']}
+    ]
 };
-
-function callToBetterDoctorAPI(lat, lng) {
-  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},20&sort=distance-asc&skip=0&limit=25&user_key=bd89718570bb0b867674b0c0788273da`;
-  $.get(BETTER_DOCTOR_ENDPOINT, function (data) {
-    pushDoctorsWhichJobsMatchSelected(data);
-  });
-}
 
 function handleDoctorJobSelection() {
   $('#jobs').change(function() {
-    let selectedJob = $('#jobs option:selected').text();
-    console.log(selectedJob);
-    if(selectedJob === '') {
-      state.selectedJob == false; 
-    } else {
-      state.selectedJob = selectedJob;
-    }
+    let selectedJobText = $('#jobs option:selected').text();
+    let selectedJobVal = $('#jobs option:selected').val();
+      $('.selected-job').text(selectedJobText);
+      state.selectedJobText = selectedJobText;
+      state.selectedJobVal = selectedJobVal;
   });
-}
-
-function pushDoctorsWhichJobsMatchSelected(apiResults) {
-  apiResults.data.forEach(result => {
-    result.doctors.forEach(doctor => {
-      doctor.specialties.forEach(skill => {
-        if(skill.actor === state.selectedJob) {
-          state.practicesOfSelectedJob.push(result);
-        }
-      });
-    });
-  });
-  createMarkers(state.practicesOfSelectedJob);
 }
 
 function findCurrentLocationButton() {
   $('.js-current-location').on('click', function(event) {
     $('.map').removeClass('hidden');
     $('.specialty-header').removeClass('hidden');
+    $('.display-of-doctors').removeClass('hidden');
     initMap();
   });
+}
+
+function callToBetterDoctorAPI(lat, lng) {
+  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},25&sort=distance-asc&skip=0&limit=25&user_key=bd89718570bb0b867674b0c0788273da`;
+  $.get(BETTER_DOCTOR_ENDPOINT, function (data) {
+    pushDoctorsWhichJobsMatchSelected(data);
+  });
+}
+
+function pushDoctorsWhichJobsMatchSelected(apiResults) {
+  let arrayOfJobTitlesThatMatchOptionValue = [];
+  state.selectedJobCategories.forEach(jobValues => {
+    Object.keys(jobValues).forEach(keyAsString => {
+      if(keyAsString === state.selectedJobVal) {
+        arrayOfJobTitlesThatMatchOptionValue = jobValues[state.selectedJobVal];
+      }
+    });
+  });
+  
+  let practicesOfSelectedJob = [];
+  apiResults.data.forEach(result => {
+    result.doctors.forEach(doctor => {
+      doctor.specialties.forEach(skill => {
+          if(arrayOfJobTitlesThatMatchOptionValue.indexOf(skill.actor) > -1) {
+            practicesOfSelectedJob.push(result);
+          }
+        });
+      });
+    });
+    
+    // let nameArr = [];
+    // practicesOfSelectedJob.forEach(locationsOfOffice => {
+    //   nameArr.push(locations
+    //   for(let i = 0; i < locationsOfOffice.length; i++) {
+    //     console.log(locationsOfOffice[i])
+    //   }
+    // })
+    createMarkers(practicesOfSelectedJob);
 }
 
 function findUserPosition() {
@@ -52,15 +128,13 @@ navigator.geolocation.getCurrentPosition(function(position) {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-      state.userLat = pos.lat;
-      state.userLng = pos.lng;
 
       infoWindow.setPosition(pos);
-      infoWindow.setContent('Current Location');
+      infoWindow.setContent('You are here');
       infoWindow.open(map);
       map.setCenter(pos);
       
-      callToBetterDoctorAPI(state.userLat, state.userLng);
+      callToBetterDoctorAPI(pos.lat, pos.lng);
       
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
@@ -92,75 +166,65 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 function createMarkers(practices) {
-  
-  let locationOfPractices = [];
   practices.forEach(location => {
-    
     const locationName = location.name;
     const locationStreetAddress = location.visit_address.street;
     const locationCity = location.visit_address.city;
     const locationState = location.visit_address.state;
     let locationPhoneNumber = '';
     location.phones.forEach(officeNumbers => {
-      console.log(officeNumbers)
       if(officeNumbers.type === 'landline') {
+        locationPhoneNumber = officeNumbers.number;
+      } else if(officeNumbers.type === 'business_landline') {
         locationPhoneNumber = officeNumbers.number;
       } else {
         locationPhoneNumber = 'No phone number provided';
       }
     });
-    console.log(locationPhoneNumber)
     let ifPracticeAcceptingNewPatients = '';
     if(location.accepts_new_patients === true) {
       ifPracticeAcceptingNewPatients = 'Accepting new patients';
     } else {
       ifPracticeAcceptingNewPatients = 'Not accepting new patients';
     }
-    locationOfPractices.push(`<strong>${locationName}</strong><br>
+    state.locationOfPractices.push(`<strong>${locationName}</strong><br>
                               ${locationStreetAddress}<br>
                               ${locationCity}, ${locationState}<br>              
                               ${ifPracticeAcceptingNewPatients}<br>
-                              ${locationPhoneNumber}`);
-    locationOfPractices.push(location.lat);
-    locationOfPractices.push(location.lon);
+                              ${locationPhoneNumber}<br>`);
+    state.locationOfPractices.push(location.lat);
+    state.locationOfPractices.push(location.lon);
   });  
-  
+  renderPracticesToHTML(state.locationOfPractices);
 let infowindow = new google.maps.InfoWindow({});
 
 let marker, i;
 
-  for (i = 0; i < locationOfPractices.length; i+=3) {
+  for (i = 0; i < state.locationOfPractices.length; i+=3) {
     let marker = new google.maps.Marker({
-          position: new google.maps.LatLng(locationOfPractices[i+1],locationOfPractices[i+2]),
+          position: new google.maps.LatLng(state.locationOfPractices[i+1],state.locationOfPractices[i+2]),
           map: map
         });
 
     google.maps.event.addListener(marker, 'click', (function (marker, i) {
       return function () {
-        infowindow.setContent(locationOfPractices[i]);
+        infowindow.setContent(state.locationOfPractices[i]);
         infowindow.open(map, marker);
       };
     })(marker, i));
   }
 }
 
-    
-
-// function renderDivToHTML(docImg, doc) {
-//  return `
-//    <div class='display-of-doctors'>
-//      <div class='doctor-profile'>
-
-//      </div>
-//    </div>
-//  `;
-// }
-
-
-
-
+function renderPracticesToHTML(practices) {
+  for(let i = 0; i < practices.length; i+=3) {
+    $('.display-of-doctors').append(`<li class ='js-list-of-offices'>${practices[i]}</li>`);
+  }
+}
 
 
 
 $(handleDoctorJobSelection);
 $(findCurrentLocationButton);
+
+
+

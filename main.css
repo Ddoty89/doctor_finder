@@ -11,6 +11,12 @@
   background-color:blue;
 }
 
+.js-list-of-offices {
+  /*border: 1px solid black;*/
+  list-style: none;
+  margin: 50px;
+}
+
 .hidden {
   display: none;
 }

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Find the right doctor for the job near you.</title>
+	<title>Find the Right Doctor for the Job Near You.</title>
 	<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
   <link type="text/css" rel='stylesheet' href='main.css'>
 </head>
 <body>
 	
 	<banner class='header'>
-		<h1 class='title'>Search for the doctor you need wherever you are</h1>
+		<h1 class='title'>Search for the Doctor You Need Wherever You Are</h1>
 	</banner>
 	
 	<main class='main-body' role='main'>
@@ -19,33 +19,33 @@
   			<select name="jobs" id='jobs' required>
   				<option value="0" selected>Please choose an area of health to search</option>
       		<option value="ALG">Allergist</option>
-    	    <option value="2">Dentist</option>
-		  	  <option value="3">Ear, Nose and Throat</option>
-    			<option value="4">Emergency Medicine Doctor</option>
-      		<option value="5">OBGYN</option>
-    	    <option value="6">Optometrist</option>
-		  	  <option value="7">Specialist/Technologist Athletic Traininer</option>
-		  	  <option value="6">Optometrist</option>
-		  	  <option value="6">Optometrist</option>
-		  	  <option value="6">Optometrist</option>
-		  	  <option value="6">Optometrist</option>
+    	    <option value="CHR">Chiropractics</option>
+		  	  <option value="DEN">Dentist</option>
+    			<option value="DIE">Dietitan</option>
+      		<option value="ENT">Ear, Nose & Throat</option>
+    	    <option value="FAM">Family Medicine</option>
+		  	  <option value="PED">Pediatrics/Adolescents</option>
+		  	  <option value="PT">Physical Therapy</option>
+		  	  <option value="MH">Mental Health</option>
+		  	  <option value="MHA">Mental Health - Addictions</option>
+		  	  <option value="WH">Women's Health</option>
 		  	</select>
 			</div>
 		</form>
 		
-		<p>Please allow us to use your current location</p>
-		<button class='js-current-location'>Find professsions near you</button>
+		<p>Please allow us to use your current location.</p>
+		<button class='js-current-location'>Find Professionals Near You</button>
 
 
-	<h2 class='specialty-header hidden'>Doctors with the selected specialty of <span class='selected-job'>All</span></h2>
+	<h2 class='specialty-header hidden'>Doctors with the selected specialty of <span class='selected-job'></span></h2>
 	<div id='map' class='map hidden'>
 		<script async defer 
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-qzjAThO4iRO0-WdTHV-VTFQ3e_tsQOg">
 		</script>
 	</div>
 
-	<div class='display-of-doctors'>
-
+	<div class='display-of-doctors hidden'>
+    
 	</div>
 
 	</main>
