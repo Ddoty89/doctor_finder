@@ -176,7 +176,8 @@ body, html {
 
 .next {
   height:40px;
-  width:190px;
+  width:300px;
+  border-radius:3px;
 }
 
 .page-link {
