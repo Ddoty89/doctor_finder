@@ -79,13 +79,16 @@ function findCurrentLocationButton() {
   $('.js-current-location').on('click', function(event) {
     $('.map').removeClass('hidden');
     $('.specialty-header').removeClass('hidden');
-    $('.display-of-doctors').removeClass('hidden');
+    $('.js-new-search').removeClass('hidden');
+    $('.js-dropdown').addClass('hidden');
+    $('.js-user.input').addClass('hidden');
+    $('.js-search-init').addClass('hidden');
     initMap();
   });
 }
 
 function callToBetterDoctorAPI(lat, lng) {
-  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},25&sort=distance-asc&skip=0&limit=25&user_key=bd89718570bb0b867674b0c0788273da`;
+  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},25&sort=distance-asc&skip=0&limit=50&user_key=bd89718570bb0b867674b0c0788273da`;
   $.get(BETTER_DOCTOR_ENDPOINT, function (data) {
     pushDoctorsWhichJobsMatchSelected(data);
   });
@@ -106,19 +109,13 @@ function pushDoctorsWhichJobsMatchSelected(apiResults) {
     result.doctors.forEach(doctor => {
       doctor.specialties.forEach(skill => {
           if(arrayOfJobTitlesThatMatchOptionValue.indexOf(skill.actor) > -1) {
-            practicesOfSelectedJob.push(result);
+            if(practicesOfSelectedJob.indexOf(result) <= -1) {
+              practicesOfSelectedJob.push(result);
+            }
           }
         });
       });
     });
-    
-    // let nameArr = [];
-    // practicesOfSelectedJob.forEach(locationsOfOffice => {
-    //   nameArr.push(locations
-    //   for(let i = 0; i < locationsOfOffice.length; i++) {
-    //     console.log(locationsOfOffice[i])
-    //   }
-    // })
     createMarkers(practicesOfSelectedJob);
 }
 
@@ -218,13 +215,19 @@ let marker, i;
 function renderPracticesToHTML(practices) {
   for(let i = 0; i < practices.length; i+=3) {
     $('.display-of-doctors').append(`<li class ='js-list-of-offices'>${practices[i]}</li>`);
+    $('.display-of-doctors').removeClass('hidden');
   }
 }
 
+function startNewSearchButton() {
+  $('.js-new-search').click(function(event) {
+    location.reload();
+  })
+}
 
 
 $(handleDoctorJobSelection);
 $(findCurrentLocationButton);
-
+$(startNewSearchButton);
 
 

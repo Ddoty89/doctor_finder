@@ -6,50 +6,25 @@
   <link type="text/css" rel='stylesheet' href='main.css'>
 </head>
 <body>
-	
-	<banner class='header'>
-		<h1 class='title'>Search for the Doctor You Need Wherever You Are</h1>
-	</banner>
-	
-	<main class='main-body' role='main'>
-		
-		<form class='user-input'>
-			<div class='dropdown'>
-				<label class="dropdown" for="jobs">What specialty are you looking for?</label>
-  			<select name="jobs" id='jobs' required>
-  				<option value="0" selected>Please choose an area of health to search</option>
-      		<option value="ALG">Allergist</option>
-    	    <option value="CHR">Chiropractics</option>
-		  	  <option value="DEN">Dentist</option>
-    			<option value="DIE">Dietitan</option>
-      		<option value="ENT">Ear, Nose & Throat</option>
-    	    <option value="FAM">Family Medicine</option>
-		  	  <option value="PED">Pediatrics/Adolescents</option>
-		  	  <option value="PT">Physical Therapy</option>
-		  	  <option value="MH">Mental Health</option>
-		  	  <option value="MHA">Mental Health - Addictions</option>
-		  	  <option value="WH">Women's Health</option>
-		  	</select>
-			</div>
-		</form>
-		
-		<p>Please allow us to use your current location.</p>
-		<button class='js-current-location'>Find Professionals Near You</button>
-
-
-	<h2 class='specialty-header hidden'>Doctors with the selected specialty of <span class='selected-job'></span></h2>
-	<div id='map' class='map hidden'>
-		<script async defer 
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-qzjAThO4iRO0-WdTHV-VTFQ3e_tsQOg">
-		</script>
-	</div>
-
-	<div class='display-of-doctors hidden'>
+  
+   <div class="video-background">
+    <div class="video-foreground">
+      <iframe id='myVideo' src="https://www.youtube.com/embed/aOH3j5bTDBw?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=W0LHTWG-UmQ&mute=1" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+  
+  
+  <div class='get-started'>
+    <div class='start-container'>
+        <p class='landing-page-header interact'>New to the area or looking for a new health care professional?</p>
+        <p class='landing-page-header interact'>Make sure that you and your family are well taken care of by staying connected by starting your search here.</p>
+        <button class='interact next' role='button'><a class='page-link' href='mainContent.html'>Get Started</a></button>
+    </div>
+  </div>  
+  
+  
+  
     
-	</div>
-
-	</main>
-
 </body>
 <script type="text/javascript" src='app.js'></script>
 </html>
