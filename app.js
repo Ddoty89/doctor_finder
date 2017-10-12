@@ -83,7 +83,6 @@ function findCurrentLocationButton() {
     $('.js-dropdown').addClass('hidden');
     $('.js-user.input').addClass('hidden');
     $('.js-search-init').addClass('hidden');
-    initMap();
   });
 }
 
@@ -146,8 +145,7 @@ function initMap() {
   });
   infoWindow = new google.maps.InfoWindow;
 
-  const geolocationDiv = $('.js-current-location')[0];
-  google.maps.event.addDomListener(geolocationDiv, 'click', findUserPosition);
+  google.maps.event.addDomListener($('.js-current-location'), 'click', findUserPosition);
 
   if (navigator.geolocation) {
     findUserPosition();
@@ -233,5 +231,5 @@ function startNewSearchButton() {
 $(handleDoctorJobSelection);
 $(findCurrentLocationButton);
 $(startNewSearchButton);
-
+$(initMap)
 
