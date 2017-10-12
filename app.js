@@ -83,6 +83,7 @@ function findCurrentLocationButton() {
     $('.js-dropdown').addClass('hidden');
     $('.js-user.input').addClass('hidden');
     $('.js-search-init').addClass('hidden');
+    initMap();
   });
 }
 
@@ -231,5 +232,4 @@ function startNewSearchButton() {
 $(handleDoctorJobSelection);
 $(findCurrentLocationButton);
 $(startNewSearchButton);
-$(initMap)
 
