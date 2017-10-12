@@ -121,18 +121,9 @@ function pushDoctorsWhichJobsMatchSelected(apiResults) {
 
 function findUserPosition() {
   navigator.geolocation.getCurrentPosition(function(position) {
-
-      var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-      callToBetterDoctorAPI(pos.lat, pos.lng);
-
-      infoWindow.setPosition(pos);
-      infoWindow.setContent('You are here');
-      infoWindow.open(map);
-      map.setCenter(pos);
-      
+  callToBetterDoctorAPI(position.coords.latitude, position.coords.longitude)
+      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            map.setCenter(pos);
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
@@ -146,7 +137,8 @@ function initMap() {
   });
   infoWindow = new google.maps.InfoWindow;
 
-  google.maps.event.addListener($('.js-current-location'), 'click', findUserPosition);
+  var geolocationDiv = $('.js-current-location')[0];
+  var geolocationControl = new GeolocationControl(geolocationDiv, map);
   
   if (navigator.geolocation) {
     findUserPosition();
@@ -154,6 +146,12 @@ function initMap() {
     handleLocationError(false, infoWindow, map.getCenter());
   }
 }
+
+
+function GeolocationControl(controlDiv, map) {
+    google.maps.event.addDomListener(controlDiv, 'click', findUserPosition);
+}
+
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
