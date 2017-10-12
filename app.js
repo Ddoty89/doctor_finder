@@ -83,6 +83,7 @@ function findCurrentLocationButton() {
     $('.js-dropdown').addClass('hidden');
     $('.js-user.input').addClass('hidden');
     $('.js-search-init').addClass('hidden');
+    findUserPosition();
     initMap();
   });
 }
@@ -119,8 +120,11 @@ function pushDoctorsWhichJobsMatchSelected(apiResults) {
     createMarkers(practicesOfSelectedJob);
 }
 
+//need to find the location that is tied to the button click on .js-current-location and then initMap
+
 function findUserPosition() {
-navigator.geolocation.getCurrentPosition(function(position) {
+  navigator.geolocation.getCurrentPosition(function(position) {
+    console.log('hello world')
       var pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
@@ -137,7 +141,6 @@ navigator.geolocation.getCurrentPosition(function(position) {
       handleLocationError(true, infoWindow, map.getCenter());
     });
 }
-
 
 var map, infoWindow;
 function initMap() {
@@ -224,6 +227,7 @@ function startNewSearchButton() {
     location.reload();
   })
 }
+
 
 
 $(handleDoctorJobSelection);
