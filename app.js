@@ -83,7 +83,7 @@ function findCurrentLocationButton() {
     $('.js-dropdown').addClass('hidden');
     $('.js-user.input').addClass('hidden');
     $('.js-search-init').addClass('hidden');
-    initialize();
+    initMap();
   });
 }
 
@@ -119,108 +119,49 @@ function pushDoctorsWhichJobsMatchSelected(apiResults) {
     createMarkers(practicesOfSelectedJob);
 }
 
-// function findUserPosition() {
-//   navigator.geolocation.getCurrentPosition(function(position) {
+function findUserPosition() {
+  navigator.geolocation.getCurrentPosition(function(position) {
 
-//       var pos = {
-//         lat: position.coords.latitude,
-//         lng: position.coords.longitude
-//       };
-//       callToBetterDoctorAPI(pos.lat, pos.lng);
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      callToBetterDoctorAPI(pos.lat, pos.lng);
 
-//       infoWindow.setPosition(pos);
-//       infoWindow.setContent('You are here');
-//       infoWindow.open(map);
-//       map.setCenter(pos);
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('You are here');
+      infoWindow.open(map);
+      map.setCenter(pos);
       
-//     }, function() {
-//       handleLocationError(true, infoWindow, map.getCenter());
-//     });
-// }
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+}
 
-// var map, infoWindow;
-// function initMap() {
-//   map = new google.maps.Map(document.getElementById('map'), {
-//     center: {lat: 41.8781, lng: -87.6298},
-//     zoom: 11
-//   });
-//   infoWindow = new google.maps.InfoWindow;
-
-//   google.maps.event.addListener($('.js-current-location'), 'click', findUserPosition);
-  
-//   if (navigator.geolocation) {
-//     findUserPosition();
-//   } else {
-//     handleLocationError(false, infoWindow, map.getCenter());
-//   }
-// }
-
-// function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-//   infoWindow.setPosition(pos);
-//   infoWindow.setContent(browserHasGeolocation ?
-//                         'Error: The Geolocation service failed.' :
-//                         'Error: Your browser doesn\'t support geolocation.');
-//   infoWindow.open(map);
-// }
-
-var map;
-
-function initialize() {
-
-    map = new google.maps.Map(document.getElementById('map'), {
+var map, infoWindow;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 41.8781, lng: -87.6298},
     zoom: 11
-    });
+  });
+  infoWindow = new google.maps.InfoWindow;
 
-    // Create the DIV to hold the control and call the constructor passing in this DIV
-    var geolocationDiv = document.createElement('div');
-    var geolocationControl = new GeolocationControl(geolocationDiv, map);
-
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(geolocationDiv);
+  google.maps.event.addListener($('.js-current-location'), 'click', findUserPosition);
+  
+  if (navigator.geolocation) {
+    findUserPosition();
+  } else {
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
 }
 
-function GeolocationControl(controlDiv, map) {
-
-    // Set CSS for the control button
-    var controlUI = document.createElement('div');
-    controlUI.style.backgroundColor = '#444';
-    controlUI.style.borderStyle = 'solid';
-    controlUI.style.borderWidth = '1px';
-    controlUI.style.borderColor = 'white';
-    controlUI.style.height = '28px';
-    controlUI.style.marginTop = '5px';
-    controlUI.style.cursor = 'pointer';
-    controlUI.style.textAlign = 'center';
-    controlUI.title = 'Click to center map on your location';
-    controlDiv.appendChild(controlUI);
-
-    // Set CSS for the control text
-    var controlText = document.createElement('div');
-    controlText.style.fontFamily = 'Arial,sans-serif';
-    controlText.style.fontSize = '10px';
-    controlText.style.color = 'white';
-    controlText.style.paddingLeft = '10px';
-    controlText.style.paddingRight = '10px';
-    controlText.style.marginTop = '8px';
-    controlText.innerHTML = 'Center map on your location';
-    controlUI.appendChild(controlText);
-
-    
-    google.maps.event.addDomListener(controlUI, 'click', geolocate);
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+  infoWindow.open(map);
 }
-
-function geolocate() {
-
-    if (navigator.geolocation) {
-
-        navigator.geolocation.getCurrentPosition(function (position) {
-          callToBetterDoctorAPI(position.coords.latitude, position.coords.longitude);
-          var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          map.setCenter(pos);
-        });
-    }
-}
-
 
 function createMarkers(practices) {
   practices.forEach(location => {
