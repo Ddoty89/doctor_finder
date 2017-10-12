@@ -83,7 +83,6 @@ function findCurrentLocationButton() {
     $('.js-dropdown').addClass('hidden');
     $('.js-user.input').addClass('hidden');
     $('.js-search-init').addClass('hidden');
-    findUserPosition();
     initMap();
   });
 }
@@ -127,21 +126,16 @@ function findUserPosition() {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
+      callToBetterDoctorAPI(pos.lat, pos.lng);
 
       infoWindow.setPosition(pos);
       infoWindow.setContent('You are here');
       infoWindow.open(map);
       map.setCenter(pos);
       
-      callToBetterDoctorAPI(pos.lat, pos.lng);
-      
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
-}
-
-function geolocationControler(controlDiv, map) {
-  google.maps.event.addDomListener(controlDiv, 'click', findUserPosition);
 }
 
 var map, infoWindow;
@@ -152,8 +146,8 @@ function initMap() {
   });
   infoWindow = new google.maps.InfoWindow;
 
-  const geolocationDiv = $('.js-current-location');
-  let geolocationControl = new geolocationControler(geolocationDiv, map)
+  const geolocationDiv = $('.js-current-location')[0];
+  google.maps.event.addDomListener(controlDiv, 'click', findUserPosition);
 
   if (navigator.geolocation) {
     findUserPosition();
