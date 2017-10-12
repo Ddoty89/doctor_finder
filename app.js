@@ -147,7 +147,7 @@ function initMap() {
   infoWindow = new google.maps.InfoWindow;
 
   const geolocationDiv = $('.js-current-location')[0];
-  google.maps.event.addDomListener(controlDiv, 'click', findUserPosition);
+  google.maps.event.addDomListener(geolocationDiv, 'click', findUserPosition);
 
   if (navigator.geolocation) {
     findUserPosition();
