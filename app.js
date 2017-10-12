@@ -120,11 +120,9 @@ function pushDoctorsWhichJobsMatchSelected(apiResults) {
     createMarkers(practicesOfSelectedJob);
 }
 
-//need to find the location that is tied to the button click on .js-current-location and then initMap
-
 function findUserPosition() {
   navigator.geolocation.getCurrentPosition(function(position) {
-    console.log('hello world')
+
       var pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
@@ -142,6 +140,10 @@ function findUserPosition() {
     });
 }
 
+function geolocationControler(controlDiv, map) {
+  google.maps.event.addDomListener(controlDiv, 'click', findUserPosition);
+}
+
 var map, infoWindow;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -149,6 +151,9 @@ function initMap() {
     zoom: 11
   });
   infoWindow = new google.maps.InfoWindow;
+
+  const geolocationDiv = $('.js-current-location');
+  let geolocationControl = new geolocationControler(geolocationDiv, map)
 
   if (navigator.geolocation) {
     findUserPosition();
@@ -203,6 +208,7 @@ let marker, i;
   for (i = 0; i < state.locationOfPractices.length; i+=3) {
     let marker = new google.maps.Marker({
           position: new google.maps.LatLng(state.locationOfPractices[i+1],state.locationOfPractices[i+2]),
+          animation: google.maps.Animation.DROP,
           map: map
         });
 
