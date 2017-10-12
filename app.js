@@ -206,7 +206,7 @@ function GeolocationControl(controlDiv, map) {
     controlUI.appendChild(controlText);
 
     
-    google.maps.event.addDomListener(controlDiv, 'click', geolocate);
+    google.maps.event.addDomListener(controlUI, 'click', geolocate);
 }
 
 function geolocate() {
