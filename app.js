@@ -1,7 +1,6 @@
 const state = {
   selectedJobText: '',
   selectedJobVal: '',
-  arrayOfAssociatedProfessions: '',
   locationOfPractices: [],
   selectedJobCategories: [
     
@@ -230,5 +229,3 @@ function startNewSearchButton() {
 $(handleDoctorJobSelection);
 $(findCurrentLocationButton);
 $(startNewSearchButton);
-
-
