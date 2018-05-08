@@ -13,7 +13,7 @@ body, html {
 .backgroundImage {
     position: fixed;
     z-index: -1;
-    width:100100%;
+    height:100%;
     width:100%;
 }
 
