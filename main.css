@@ -1,30 +1,30 @@
 * {
-  font-family: Verdana, Geneva, sans-serif;
+    font-family: Verdana, Geneva, sans-serif;
 	box-sizing: border-box;
 	padding:0;
 	margin:0;
 }
 
 body, html {
-  width: 100%;
-  height: 100%; 
+    width: 100%;
+    height: 100%; 
 }
 
 .video-background {
-  background: #000;
-  position: fixed;
-  top: 0; right: 0; bottom: 0; left: 0;
-  z-index: -99;
+    background: #000;
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -99;
 }
 .video-foreground,
 .video-background iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.8;
 }
 
 .init-page { 
@@ -36,37 +36,44 @@ body, html {
 }
 
 .main {
-  max-width: 1000px;
-  padding-left: 20px;
-  padding-right: 20px;
+    max-width: 1000px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .header {
-  width: 100%;
-  height: 450px;
-  background: url('http://staticr1.blastingcdn.com/media/photogallery/2016/8/24/660x290/b_1433x630/best-paying-jobs-in-medical-field-source-nurseanesthetistcareer-com_838139.jpg');
-  display: flex;
-  position: relative;
-  margin: auto;
-  background-position: 50% 1%;
-  background-repeat: no-repeat;
+    position:relative;
+    text-align:center;
+}
+
+.bannerImg {
+    width:100%;
 }
 
 .title {
-  position: relative;
-  margin: auto;
-  bottom: 40%;
-  
+    position:absolute;
+    top:30px;
+    left:50%;
+    transform: translate(-50%, -50%);
+    font-size:28px;
+}
+
+.dropdown,
+.jobs {
+    display:block;
 }
 
 .dropdown {
-  font-size: 25px;
+    font-size: 25px;
+    margin-top:50px;
 }
 
 #jobs {
-  height:40px;
-  width:420px;
-  font-size: 18px;
+    height:40px;
+    width:420px;
+    font-size: 18px;
+    margin-top:30px;
+
 }
 
 #map {
@@ -75,132 +82,133 @@ body, html {
 }
 
 .js-user-input {
-  display: flex;
+    display: flex;
 }
 
 .js-dropdown {
-  padding: 50px;
-  margin: auto;
+    padding: 50px;
+    margin: auto;
 }
 
 .js-search-init {
-  margin-bottom: 150px;
-  display: flex;
-  border-radius: 3px;
+    margin-bottom: 150px;
+    display: flex;
+    border-radius: 3px;
+    margin-top: 30px;
 }
 
 .init-container {
-  margin: auto;
+    margin: auto;
 }
 
 .inline {
-  font-size: 25px;
-  margin: 15px;
-  display: inline-block;
+    font-size: 25px;
+    margin: 15px;
+    display: block;
+    margin:auto;
 }
 
 .js-current-location {
-  border-radius: 3px;
-  font-size: 18px;
-  height: 40px;
-  width: 300px;
+    border-radius: 3px;
+    font-size: 18px;
+    height: 40px;
+    width: 300px;
+    margin-top: 30px;
 }
 
 .map-and-doctors {
-  display: flex;
+    display: flex;
 }
 
 .map-doc-div {
-  margin:auto;
+    margin:auto;
 }
 
-.map-div,
 .specialty-div {
-  display: block;
-  padding: 30px;
+    display: block;
+    margin-top: 40px;
 }
 
 .js-list-of-offices {
-  list-style: none;
-  margin-bottom: 50px;
+    list-style: none;
+    margin-bottom: 100px;
 }
 
-.map-and-speciality, 
+.map,
 .display-of-doctors{
-  display: inline-block;
+    display: inline-block;
+    text-align: center;
+}
+
+.specialty-header {
+    text-align: center;
+}
+
+.map {
+    width:55%;
+    margin-top: 100px;
+    max-height:400px;
+}
+
+.map-div {
+    width:100vw;
+    text-align: center;
 }
 
 .display-of-doctors {
-  border: 2px solid grey;
-  border-radius: 3px;
-  height: 500px;
-  width: 400px;
-  overflow-y: scroll;
-  margin-top: 145px;
+    border: 2px solid grey;
+    border-radius: 3px;
+    width: 29%;
+    overflow-y: scroll;
+    max-height:400px;
+    margin-top: 100px;
 }
 
 .new-search-container {
-  display: flex;
-  padding: 50px;
+    display: flex;
+    padding: 50px;
 }
 
 .js-new-search {
-  margin: auto;
-  height: 50px;
-  width: 250px;
-  font-size:20px;
-  border-radius: 3px;
-}
-
-.hidden {
-  display: none;
+    margin: auto;
+    height: 50px;
+    width: 250px;
+    font-size:20px;
+    border-radius: 3px;
 }
 
 .get-started {
- /* display:flex;
-  position:absolute;
-  top:40%;
-  left:25%;*/
-  border:1px solid black;
-  max-width: 1000px;
-  margin:auto;
-  width:100%;
+    max-width: 1000px;
+    margin:auto;
+    width:50%;
+    position:relative;
+    top:40%;
 }
 
 .start-container {
-  text-align: center;
-  height:100vh;
-  position:relative;
-  overflow:auto;
+    text-align: center;
 }
 
 
 .start-container p {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  line-height: 40px;
+    line-height: 40px;
+    color:white;
+}
+
+.start-container p,
+.page-link {
+    display:block;
 }
 
 .page-link {
-  color: black;
-  text-decoration: none;
-  padding: 20px 70px;
-  border: 1px solid black;
-  background-color: white;
-  border-radius:5px;
-  margin: 0;
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    color: black;
+    text-decoration: none;
+    padding: 20px 70px;
+    border: 1px solid white;
+    color: white;
+    border-radius:5px;
 }
 
-@media (min-aspect-ratio: 16/9) {
-  .video-foreground { height: 300%; top: -100%; }
-}
-@media (max-aspect-ratio: 16/9) {
-  .video-foreground { width: 300%; left: -100%; }
+.hidden {
+    display: none;
 }

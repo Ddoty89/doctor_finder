@@ -131,7 +131,7 @@ function findUserPosition() {
 var map, infoWindow;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 41.8781, lng: -87.6298},
+    center: {lat: 39.7684, lng: -86.1581},
     zoom: 11
   });
   infoWindow = new google.maps.InfoWindow;

@@ -4,37 +4,34 @@
 	<title>Find the Right Doctor for the Job Near You.</title>
 	<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
   <link type="text/css" rel='stylesheet' href='main.css'>
+  <link type="text/css" rel='stylesheet' href='responsiveGrid.css'>
 </head>
 <body>
 	
-	<div class='header-container'>
-	  <banner class='header'>
-		  <h1 class='title'>Search for the Doctor You Need Wherever You Are</h1>
-	  </banner>
-	  
-	</div>
-	
+  	<div class='header'>
+  		<img class='bannerImg' src='file:///Users/thedotys/Desktop/doctors-wallpapers.jpg' >
+	  	<h1 class='title'>Search for the Doctor You Need Wherever You Are</h1>
+  	</div>
+
 	<main class='main-body' role='main'>
-		
-		
 		
 		<form class='js-user-input'>
 			<div class='js-dropdown'>
 				<label class="dropdown" for="jobs">What specialty are you looking for?</label>
-  			<select name="jobs" id='jobs' required>
-  				<option value="0" selected>Please choose an area of health to search</option>
-      		<option value="ALG">Allergist</option>
-    	    <option value="CHR">Chiropractics</option>
-		  	  <option value="DEN">Dentist</option>
-    			<option value="DIE">Dietitan</option>
-      		<option value="ENT">Ear, Nose & Throat</option>
-    	    <option value="FAM">Family Medicine</option>
-		  	  <option value="PED">Pediatrics/Adolescents</option>
-		  	  <option value="PT">Physical Therapy</option>
-		  	  <option value="MH">Mental Health</option>
-		  	  <option value="MHA">Mental Health - Addictions</option>
-		  	  <option value="WH">Women's Health</option>
-		  	</select>
+  				<select name="jobs" id='jobs' class='jobs' required>
+	  				<option value="0" selected>Please choose an area of health to search</option>
+	      			<option value="ALG">Allergist</option>
+	    	    	<option value="CHR">Chiropractics</option>
+			  	    <option value="DEN">Dentist</option>
+	    			<option value="DIE">Dietitan</option>
+	      			<option value="ENT">Ear, Nose & Throat</option>
+	    	    	<option value="FAM">Family Medicine</option>
+			  	    <option value="PED">Pediatrics/Adolescents</option>
+					<option value="PT">Physical Therapy</option>
+					<option value="MH">Mental Health</option>
+					<option value="MHA">Mental Health - Addictions</option>
+					<option value="WH">Women's Health</option>
+		  		</select>
 			</div>
 		</form>
 		
@@ -47,26 +44,25 @@
     
     <div class='map-and-doctors'>
       
-      <div class='map-doc-div'>
+        <div class='map-doc-div'>
         
-        <div class='map-and-speciality'>
-          <div class='specialty-div'>
-            <h2 class='specialty-header hidden'>Medical offices near you with the specialty of <span class='selected-job'></span></h2>
-          </div>
-    
-          <div class='map-div'>
-		        <div id='map' class='map map-section hidden'>
-			        <script async defer 
-			        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-qzjAThO4iRO0-WdTHV-VTFQ3e_tsQOg">
-			        </script>
-		        </div>
-	  	    </div>
-        </div>
+	        <div class='map-and-speciality'>
+				<div class='specialty-div'>
+					<h2 class='specialty-header hidden'>Medical offices near you with the specialty of <span class='selected-job'></span></h2>
+				</div>
+	    	
+	            <div class='map-div'>
+			        <div id='map' class='map map-section hidden'>
+				        <script async defer 
+				        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-qzjAThO4iRO0-WdTHV-VTFQ3e_tsQOg">
+				        </script>
+			        </div>
+			        <div class='display-of-doctors hidden'></div>
+		  	    </div>
+	        </div>
       
-	  	  <div class='display-of-doctors hidden'>
-  		  </div>
-		  </div>
 		</div>
+	</div>
   		
   	<div class='new-search-container'>
 		  <button class='js-new-search hidden'>New Search?</button>
