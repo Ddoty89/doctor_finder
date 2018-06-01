@@ -87,7 +87,7 @@ function findCurrentLocationButton() {
 }
 
 function callToBetterDoctorAPI(lat, lng) {
-  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},25&sort=distance-asc&skip=0&limit=50&user_key=bd89718570bb0b867674b0c0788273da`;
+  let BETTER_DOCTOR_ENDPOINT = `https://api.betterdoctor.com/2016-03-01/practices?location=${lat},${lng},30&sort=distance-asc&skip=0&limit=50&user_key=bd89718570bb0b867674b0c0788273da`;
   $.get(BETTER_DOCTOR_ENDPOINT, function (data) {
     pushDoctorsWhichJobsMatchSelected(data);
   });
